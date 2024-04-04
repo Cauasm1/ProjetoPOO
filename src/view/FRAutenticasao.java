@@ -4,7 +4,9 @@
  */
 package view;
 
+import Controller.UsuarioController;
 import javax.swing.JOptionPane;
+import utils.Utils;
 
 /**
  *
@@ -32,13 +34,14 @@ public class FRAutenticasao extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
-        txtEmail = new javax.swing.JTextField();
+        txtemail = new javax.swing.JTextField();
         btentrar = new javax.swing.JButton();
-        txtsenha = new javax.swing.JTextField();
+        txtsenha = new javax.swing.JPasswordField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Autenticação");
 
-        jPanel1.setBackground(new java.awt.Color(153, 255, 153));
+        jPanel1.setBackground(new java.awt.Color(153, 255, 102));
 
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/cadeado.png"))); // NOI18N
 
@@ -46,10 +49,10 @@ public class FRAutenticasao extends javax.swing.JFrame {
 
         jLabel3.setText("Senha:");
 
-        txtEmail.setName("txtEmail"); // NOI18N
-        txtEmail.addActionListener(new java.awt.event.ActionListener() {
+        txtemail.setName("txtemail"); // NOI18N
+        txtemail.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtEmailActionPerformed(evt);
+                txtemailActionPerformed(evt);
             }
         });
 
@@ -68,25 +71,12 @@ public class FRAutenticasao extends javax.swing.JFrame {
             }
         });
 
-        txtsenha.setName("txtsenha"); // NOI18N
-        txtsenha.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtsenhaActionPerformed(evt);
-            }
-        });
-
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(39, 39, 39)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jLabel3)
-                            .addComponent(txtEmail)
-                            .addComponent(txtsenha, javax.swing.GroupLayout.DEFAULT_SIZE, 255, Short.MAX_VALUE)))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(142, 142, 142)
                         .addComponent(jLabel1))
@@ -95,7 +85,13 @@ public class FRAutenticasao extends javax.swing.JFrame {
                         .addComponent(jLabel2))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(127, 127, 127)
-                        .addComponent(btentrar)))
+                        .addComponent(btentrar))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(39, 39, 39)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jLabel3)
+                            .addComponent(txtemail, javax.swing.GroupLayout.DEFAULT_SIZE, 255, Short.MAX_VALUE)
+                            .addComponent(txtsenha))))
                 .addContainerGap(65, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
@@ -106,7 +102,7 @@ public class FRAutenticasao extends javax.swing.JFrame {
                 .addGap(33, 33, 33)
                 .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(txtEmail, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(txtemail, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(40, 40, 40)
                 .addComponent(jLabel3)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -130,41 +126,39 @@ public class FRAutenticasao extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void txtEmailActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtEmailActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtEmailActionPerformed
-
     private void btentrarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btentrarMouseClicked
-        
-        if(txtEmail.getText().equals("")){
-        JOptionPane.showMessageDialog(null,"Campo 'Email' em branco");
-        return;
+
+        if (txtemail.getText().equals("")) {
+            JOptionPane.showMessageDialog(null, "Campo 'Email' em branco");
+            return;
         }
-        
-        if(new String(txtsenha.getPassword()).equals("")){
-        JOptionPane.showMessageDialog(null, "Campo 'Senha' em branco");
-        return;
+
+        if (new String(txtsenha.getPassword()).equals("")) {
+            JOptionPane.showMessageDialog(null, "Campo 'Senha' em branco");
+            return;
         }
-        
+
+        String senha = new String(txtsenha.getPassword());
+
+        String hash = Utils.calcularMD5(senha);
+
+        UsuarioController controller = new UsuarioController();
+        if (controller.autenticar(txtemail.getText(), hash) == true) {
+
+            {
+                this.dispose();
+                new FRMenu().setVisible(true);
+            }
+        }
     }//GEN-LAST:event_btentrarMouseClicked
 
     private void btentrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btentrarActionPerformed
-      
+
     }//GEN-LAST:event_btentrarActionPerformed
 
-    private void txtsenhaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtsenhaActionPerformed
-        
-        if(txtEmail.getText().equals("")){
-        JOptionPane.showMessageDialog(null, "Campo 'Email' em branco");
-              
-        }
-        
-        if(new String(txtsenha.getPassword()).equals("")){
-        JOptionPane.showMessageDialog(null, "Campo 'Senha' em branco");
-
-        }
-        
-    }//GEN-LAST:event_txtsenhaActionPerformed
+    private void txtemailActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtemailActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtemailActionPerformed
 
     /**
      * @param args the command line arguments
@@ -207,7 +201,7 @@ public class FRAutenticasao extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JTextField txtEmail;
-    private javax.swing.JTextField txtsenha;
+    private javax.swing.JTextField txtemail;
+    private javax.swing.JPasswordField txtsenha;
     // End of variables declaration//GEN-END:variables
 }
