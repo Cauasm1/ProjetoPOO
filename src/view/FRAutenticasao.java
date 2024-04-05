@@ -41,7 +41,7 @@ public class FRAutenticasao extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Autenticação");
 
-        jPanel1.setBackground(new java.awt.Color(153, 255, 102));
+        jPanel1.setBackground(new java.awt.Color(51, 255, 204));
 
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/cadeado.png"))); // NOI18N
 
