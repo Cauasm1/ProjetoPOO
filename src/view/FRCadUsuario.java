@@ -4,7 +4,11 @@
  */
 package view;
 
+import Controller.UsuarioController;
+import java.util.Date;
 import javax.swing.JOptionPane;
+import model.Usuario;
+import utils.Utils;
 
 /**
  *
@@ -241,6 +245,23 @@ public class FRCadUsuario extends javax.swing.JDialog {
     private void btnSalvarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnSalvarMouseClicked
         if (verificaCampos() == false) {
             return;
+        }
+
+        Usuario usu = new Usuario();
+        usu.setNome(txtNome.getText());
+        usu.setEmail(txtEmail.getText());
+
+        String senha = new String(txtSenha.getPassword());
+        senha = Utils.calcularMD5(senha);
+        usu.setSenha(senha);
+
+        usu.setAtivo(ckbAtivo.isSelected());
+        Date data = Utils.converterStringToDate(txtDataNasc.getText());
+        usu.setDataNasc(data);
+
+        UsuarioController controller = new UsuarioController();
+        if (controller.adicionarUsuario(usu)) {
+            this.dispose();
         }
     }//GEN-LAST:event_btnSalvarMouseClicked
 
