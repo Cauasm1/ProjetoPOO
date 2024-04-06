@@ -53,10 +53,6 @@ public class Usuario {
         this.dataNasc = dataNasc;
     }
 
-    public void setAtivo(boolean ativo) {
-        this.ativo = ativo;
-    }
-
     public long getPkUsuario() {
         return pkUsuario;
     }

@@ -5,6 +5,7 @@
 package view;
 
 import Controller.UsuarioController;
+import java.awt.event.KeyEvent;
 import javax.swing.JOptionPane;
 import utils.Utils;
 
@@ -34,9 +35,9 @@ public class FRAutenticasao extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
-        txtemail = new javax.swing.JTextField();
-        btentrar = new javax.swing.JButton();
-        txtsenha = new javax.swing.JPasswordField();
+        txtEmail = new javax.swing.JTextField();
+        btnEntrar = new javax.swing.JButton();
+        txtSenha = new javax.swing.JPasswordField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Autenticação");
@@ -49,25 +50,25 @@ public class FRAutenticasao extends javax.swing.JFrame {
 
         jLabel3.setText("Senha:");
 
-        txtemail.setName("txtemail"); // NOI18N
-        txtemail.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtemailActionPerformed(evt);
+        txtEmail.setName("txtEmail"); // NOI18N
+        txtEmail.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txtEmailKeyPressed(evt);
             }
         });
 
-        btentrar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/login.png"))); // NOI18N
-        btentrar.setText("Entrar");
-        btentrar.setName("bt100"); // NOI18N
-        btentrar.setOpaque(true);
-        btentrar.addMouseListener(new java.awt.event.MouseAdapter() {
+        btnEntrar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/login.png"))); // NOI18N
+        btnEntrar.setText("Entrar");
+        btnEntrar.setName("bt100"); // NOI18N
+        btnEntrar.setOpaque(true);
+        btnEntrar.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                btentrarMouseClicked(evt);
+                btnEntrarMouseClicked(evt);
             }
         });
-        btentrar.addActionListener(new java.awt.event.ActionListener() {
+        btnEntrar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btentrarActionPerformed(evt);
+                btnEntrarActionPerformed(evt);
             }
         });
 
@@ -85,13 +86,13 @@ public class FRAutenticasao extends javax.swing.JFrame {
                         .addComponent(jLabel2))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(127, 127, 127)
-                        .addComponent(btentrar))
+                        .addComponent(btnEntrar))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(39, 39, 39)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(jLabel3)
-                            .addComponent(txtemail, javax.swing.GroupLayout.DEFAULT_SIZE, 255, Short.MAX_VALUE)
-                            .addComponent(txtsenha))))
+                            .addComponent(txtEmail, javax.swing.GroupLayout.DEFAULT_SIZE, 255, Short.MAX_VALUE)
+                            .addComponent(txtSenha))))
                 .addContainerGap(65, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
@@ -102,13 +103,13 @@ public class FRAutenticasao extends javax.swing.JFrame {
                 .addGap(33, 33, 33)
                 .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(txtemail, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(txtEmail, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(40, 40, 40)
                 .addComponent(jLabel3)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(txtsenha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(txtSenha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(75, 75, 75)
-                .addComponent(btentrar)
+                .addComponent(btnEntrar)
                 .addContainerGap(74, Short.MAX_VALUE))
         );
 
@@ -126,39 +127,44 @@ public class FRAutenticasao extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btentrarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btentrarMouseClicked
+    private void btnEntrarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnEntrarMouseClicked
 
-        if (txtemail.getText().equals("")) {
+    }//GEN-LAST:event_btnEntrarMouseClicked
+
+    private void btnEntrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEntrarActionPerformed
+
+    }//GEN-LAST:event_btnEntrarActionPerformed
+
+    private void txtEmailKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtEmailKeyPressed
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            txtSenha.requestFocus();
+        }
+    }//GEN-LAST:event_txtEmailKeyPressed
+
+    private void logar() {
+        if (txtEmail.getText().equals("")) {
             JOptionPane.showMessageDialog(null, "Campo 'Email' em branco");
             return;
         }
 
-        if (new String(txtsenha.getPassword()).equals("")) {
+        if (new String(txtSenha.getPassword()).equals("")) {
             JOptionPane.showMessageDialog(null, "Campo 'Senha' em branco");
             return;
         }
 
-        String senha = new String(txtsenha.getPassword());
+        String senha = new String(txtSenha.getPassword());
 
         String hash = Utils.calcularMD5(senha);
 
         UsuarioController controller = new UsuarioController();
-        if (controller.autenticar(txtemail.getText(), hash) == true) {
+        if (controller.autenticar(txtEmail.getText(), hash) == true) {
 
             {
                 this.dispose();
                 new FRMenu().setVisible(true);
             }
         }
-    }//GEN-LAST:event_btentrarMouseClicked
-
-    private void btentrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btentrarActionPerformed
-
-    }//GEN-LAST:event_btentrarActionPerformed
-
-    private void txtemailActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtemailActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtemailActionPerformed
+    }
 
     /**
      * @param args the command line arguments
@@ -196,12 +202,12 @@ public class FRAutenticasao extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btentrar;
+    private javax.swing.JButton btnEntrar;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JTextField txtemail;
-    private javax.swing.JPasswordField txtsenha;
+    private javax.swing.JTextField txtEmail;
+    private javax.swing.JPasswordField txtSenha;
     // End of variables declaration//GEN-END:variables
 }
