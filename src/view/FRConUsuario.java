@@ -4,6 +4,7 @@
  */
 package view;
 
+import utils.Utils;
 import Controller.UsuarioController;
 import javax.swing.table.DefaultTableModel;
 import model.Usuario;
@@ -45,7 +46,7 @@ public class FRConUsuario extends javax.swing.JDialog {
         jPanel1.setBackground(new java.awt.Color(204, 0, 0));
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
-        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/9165479_file_list_document_icon.png"))); // NOI18N
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/usuario.png"))); // NOI18N
         jLabel1.setText("Consulta de Usuários");
 
         tbUsuario.setModel(new javax.swing.table.DefaultTableModel(
@@ -76,7 +77,7 @@ public class FRConUsuario extends javax.swing.JDialog {
         });
         jScrollPane1.setViewportView(tbUsuario);
 
-        btnPesquisar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/211817_search_strong_icon (1).png"))); // NOI18N
+        btnPesquisar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/lupa.png"))); // NOI18N
         btnPesquisar.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 btnPesquisarMouseClicked(evt);
@@ -173,7 +174,7 @@ public class FRConUsuario extends javax.swing.JDialog {
             Object[] linha = {usu.getPkUsuario(),
                 usu.getNome(),
                 usu.getEmail(),
-                usu.getDataNasc(),
+                Utils.converterDateToString(usu.getDataNasc()),
                 usu.ativoToString()};
             modelo.addRow(linha);
         }
