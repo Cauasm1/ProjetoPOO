@@ -43,4 +43,13 @@ public class UsuarioController {
         return usuarioDAO.readForDesc(tipo, desc);
     }
 
+    public Usuario readForPk(long pk) {
+        Usuario usu = usuarioDAO.readForPk(pk);
+        if (usu == null) {
+            JOptionPane.showMessageDialog(null, "Usuário não encontrado");
+            return null;
+        }
+        return usu;
+    }
+
 }
