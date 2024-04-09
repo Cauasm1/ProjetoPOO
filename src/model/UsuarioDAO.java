@@ -40,6 +40,55 @@ public class UsuarioDAO {
         return false;
     }
 
+    public Usuario readForDesc(int tipo, String desc) {
+        String sql = "SELECT * FROM tbusuario";
+        if (!desc.equals("")) {
+            if (tipo == 0 || tipo == 1) {
+                sql = sql + "WHERE nome LIKE?";
+            } else {
+                sql = sql + "WHERE email LIKE?";
+            }
+        }
+        GerenciadorConexao gerenciador = new GerenciadorConexao();
+        Connection con = gerenciador.getConexao();
+        PreparedStatement stmt = null;
+        ResultSet rs = null;
+        List<Usuario> usuario = new ArrayList<>();
+
+        try {
+            stmt = con.prepareStatement(sql);
+            if (!desc.equals("")) {
+                if (tipo == 0 || tipo == 2) {
+                    stmt.setString(1, desc + "%");
+                } else {
+                    stmt.setString(1, "%" + desc + "%");
+                }
+            }
+            rs = stmt.executeQuery();
+        }
+        stmt.setLong(1, pk);
+        rs = stmt.executeQuery();
+        if (rs.next()) {
+            usuario.setPkUsuario(rs.getLong("pkusuario"));
+            usuario.setNome(rs.getString("nome"));
+            usuario.setEmail(rs.getString("senha"));
+            usuario.setDataNasc(rs.getDate("datanasc"));
+            usuario.setAtivo(rs.getBoolean("ativo"));
+        }
+    }
+    catch (SQLException ex
+
+    
+        ) {
+            Logger.getLogger(UsuarioDAO.class.getName()).log(
+                Level.SEVERE, null, ex);
+    }
+
+    
+        finally {
+            gerenciador.closeConnection(stmt, rs);
+    }
+
     public boolean adicionarUsuario(Usuario u) {
         String sql = "INSERT into TBUSUARIO (nome, email, " + "senha, dataNasc, ativo)" + "VALUES (?,?,?,?,?)";
 
@@ -65,51 +114,31 @@ public class UsuarioDAO {
         return false;
     }
 
-    public List<Usuario> readForDesc(int tipo, String desc) {
-        String sql = "SELECT * FROM tbusuario";
-        if (!desc.equals("")) {
-            if (tipo == 0 || tipo == 1) {
-                sql = "WHERE nome LIKE?";
-            } else {
-                sql = "WHERE email LIKE?";
-            }
-        }
-
+    public Usuario readForPk(long pk) {
+        String sql = "SELECT * FROM tbusuario WHERE pkusuario = ?";
         GerenciadorConexao gerenciador = new GerenciadorConexao();
         Connection con = gerenciador.getConexao();
         PreparedStatement stmt = null;
         ResultSet rs = null;
-        List<Usuario> usuarios = new ArrayList<>();
+        Usuario usuario = new Usuario();
 
         try {
             stmt = con.prepareStatement(sql);
-            if (!desc.equals("")) {
-                if (tipo == 0 || tipo == 2) {
-                    stmt.setString(1, desc + "%");
-                } else {
-                    stmt.setString(1, "%" + desc + "%");
-                }
-            }
-
+            stmt.setLong(1, pk);
             rs = stmt.executeQuery();
-
-            while (rs.next()) {
-                Usuario usuario = new Usuario();
-
+            if (rs.next()) {
                 usuario.setPkUsuario(rs.getLong("pkusuario"));
                 usuario.setNome(rs.getString("nome"));
                 usuario.setEmail(rs.getString("senha"));
                 usuario.setDataNasc(rs.getDate("datanasc"));
                 usuario.setAtivo(rs.getBoolean("ativo"));
-                usuarios.add(usuario);
             }
-
         } catch (SQLException ex) {
             Logger.getLogger(UsuarioDAO.class.getName()).log(
                     Level.SEVERE, null, ex);
         } finally {
             gerenciador.closeConnection(stmt, rs);
         }
-        return usuarios;
+        return usuario;
     }
 }
