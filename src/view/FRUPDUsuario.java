@@ -91,6 +91,11 @@ public class FRUPDUsuario extends javax.swing.JDialog {
         jLabel6.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel6.setText("Data de Nascimento");
 
+        txtNome.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtNomeActionPerformed(evt);
+            }
+        });
         txtNome.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 txtNomeKeyPressed(evt);
@@ -151,6 +156,7 @@ public class FRUPDUsuario extends javax.swing.JDialog {
         jLabel7.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel7.setText("Confirmar Senha");
 
+        txtConfirmarSenha.setBackground(new java.awt.Color(153, 153, 153));
         txtConfirmarSenha.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 txtConfirmarSenhaKeyPressed(evt);
@@ -163,6 +169,11 @@ public class FRUPDUsuario extends javax.swing.JDialog {
         btnExcluir.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 btnExcluirMouseClicked(evt);
+            }
+        });
+        btnExcluir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnExcluirActionPerformed(evt);
             }
         });
         btnExcluir.addKeyListener(new java.awt.event.KeyAdapter() {
@@ -338,19 +349,43 @@ public class FRUPDUsuario extends javax.swing.JDialog {
         }
 
         Usuario usu = new Usuario();
-        usu.setNome(txtNome.getText());
-        usu.setEmail(txtEmail.getText());
+        Long pk = Long.valueOf(txtCodigo.getText());
+        String nome = txtNome.getText();
+        String email = txtEmail.getText();
+        String senha = "";
+        boolean ativo = ckbAtivo.isSelected();
+        Date dataDb = usu.getDataNasc();
 
-        String senha = new String(txtSenha.getPassword());
-        senha = Utils.calcularMD5(senha);
+        if (!nome.equals(txtNome.getText())) {
+            usu.setNome(nome);
+        } else {
+            usu.setNome(txtNome.getText());
+        }
+        if (!email.equals(txtEmail.getText())) {
+            usu.setEmail(email);
+        } else {
+            usu.setEmail(txtEmail.getText());
+        }
+
+        if (txtSenha.isEditable()) {
+            senha = new String(txtSenha.getPassword());
+            senha = Utils.calcularMD5(senha);
+        } else {
+            senha = new String(txtSenha.getPassword());
+        }
         usu.setSenha(senha);
 
-        usu.setAtivo(ckbAtivo.isSelected());
+        if (ativo != ckbAtivo.isSelected()) {
+            usu.setAtivo(ativo);
+        } else {
+            usu.setAtivo(ckbAtivo.isSelected());
+        }
+
         Date data = Utils.converterStringToDate(txtDataNasc.getText());
         usu.setDataNasc(data);
 
         UsuarioController controller = new UsuarioController();
-        if (controller.adicionarUsuario(usu)) {
+        if (controller.alterarUsuario(usu, pk)) {
             this.dispose();
         }
     }//GEN-LAST:event_btnSalvarMouseClicked
@@ -400,6 +435,14 @@ public class FRUPDUsuario extends javax.swing.JDialog {
             txtConfirmarSenha.setText(getSenhaUsuario());
         }
     }//GEN-LAST:event_btnAlterarSenhaMouseClicked
+
+    private void btnExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExcluirActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnExcluirActionPerformed
+
+    private void txtNomeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtNomeActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtNomeActionPerformed
     private boolean verificaCampos() {
         if (txtNome.getText().equals("")) {
             JOptionPane.showMessageDialog(null, "Campo 'nome' em branco");
