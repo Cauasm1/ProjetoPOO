@@ -202,7 +202,7 @@ public class FRConUsuario extends javax.swing.JDialog {
                     tbUsuario.getValueAt(tbUsuario.getSelectedRow(), 0).toString()
             );
             FRUPDUsuario telaUPD = new FRUPDUsuario(null, rootPaneCheckingEnabled);
-            telaUPD.setUPD.setPKUsuario(pk);
+            telaUPD.setPkUsuario(pk);
             telaUPD.carregarUsuario();
             telaUPD.setVisible(true);
         }
