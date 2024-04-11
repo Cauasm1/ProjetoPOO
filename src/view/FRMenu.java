@@ -36,28 +36,30 @@ public class FRMenu extends javax.swing.JFrame {
         mConsulta = new javax.swing.JMenu();
         MIConUsuario = new javax.swing.JMenuItem();
         jMenuItem5 = new javax.swing.JMenuItem();
+        A = new javax.swing.JMenu();
+        MISobre = new javax.swing.JMenu();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jPanel1.setBackground(new java.awt.Color(51, 102, 255));
 
-        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/globo.png"))); // NOI18N
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/8666725_globe_icon (3).png"))); // NOI18N
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(144, 144, 144)
+                .addContainerGap(115, Short.MAX_VALUE)
                 .addComponent(jLabel1)
-                .addContainerGap(156, Short.MAX_VALUE))
+                .addContainerGap(127, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(127, 127, 127)
+                .addContainerGap(98, Short.MAX_VALUE)
                 .addComponent(jLabel1)
-                .addContainerGap(150, Short.MAX_VALUE))
+                .addContainerGap(121, Short.MAX_VALUE))
         );
 
         mCadastro.setText("Cadastro");
@@ -98,6 +100,18 @@ public class FRMenu extends javax.swing.JFrame {
 
         jMenuBar1.add(mConsulta);
 
+        A.setText("Ajuda");
+
+        MISobre.setText("Sobre");
+        MISobre.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                MISobreActionPerformed(evt);
+            }
+        });
+        A.add(MISobre);
+
+        jMenuBar1.add(A);
+
         setJMenuBar(jMenuBar1);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -125,6 +139,10 @@ public class FRMenu extends javax.swing.JFrame {
     private void MIConUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MIConUsuarioActionPerformed
         new FRConUsuario(this, rootPaneCheckingEnabled).setVisible(true);
     }//GEN-LAST:event_MIConUsuarioActionPerformed
+
+    private void MISobreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MISobreActionPerformed
+        new FRSobre(this, rootPaneCheckingEnabled).setVisible(true);
+    }//GEN-LAST:event_MISobreActionPerformed
 
     /**
      * @param args the command line arguments
@@ -162,9 +180,11 @@ public class FRMenu extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JMenu A;
     private javax.swing.JMenuItem MICadUsuario;
     private javax.swing.JMenuItem MIConUsuario;
     private javax.swing.JMenuItem MISair;
+    private javax.swing.JMenu MISobre;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuItem jMenuItem2;
