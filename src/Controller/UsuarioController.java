@@ -61,4 +61,12 @@ public class UsuarioController {
         return usu;
     }
 
+    public boolean excluirUsuario(int pkUsuario) {
+        if (usuarioDAO.excluirUsuario(pkUsuario)) {
+            return true;
+        } else {
+            JOptionPane.showMessageDialog(null, "Usuário não excluido");
+            return false;
+        }
+    }
 }

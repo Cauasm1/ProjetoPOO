@@ -163,4 +163,27 @@ public class UsuarioDAO {
         }
         return usuario;
     }
+
+    public boolean excluirUsuario(int pkUsuario) {
+        String sql = "DELETE FROM tbusuario" + "WHERE pkusuario = ?";
+
+        GerenciadorConexao gerenciador = new GerenciadorConexao();
+        Connection con = gerenciador.getConexao();
+        PreparedStatement stmt = null;
+
+        try {
+            stmt = con.prepareStatement(sql);
+            stmt.setInt(1, pkUsuario);
+
+            stmt.executeUpdate();
+
+            JOptionPane.showMessageDialog(null, "Usuário excluído com sucesso");
+            return true;
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Error ao excluir" + ex);
+        } finally {
+            gerenciador.closeConnection(stmt);
+        }
+        return false;
+    }
 }
